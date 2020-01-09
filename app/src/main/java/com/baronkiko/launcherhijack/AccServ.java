@@ -1,9 +1,6 @@
 package com.baronkiko.launcherhijack;
 
 import android.accessibilityservice.AccessibilityService;
-import android.app.UiModeManager;
-import android.content.res.Configuration;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
@@ -16,13 +13,24 @@ public class AccServ extends AccessibilityService {
     static final String TAG = "AccServ";
     static boolean HomePressCanceled = false;
     static HomeWatcher homeWatcher;
-    static String lastApp, lastClass;
+    static String lastApp, lastClass, pName, cName;
     private static SettingsMan.SettingStore settings;
+
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         lastApp = (String) event.getPackageName();
         lastClass = (String) event.getClassName();
+
+        String launcher = "com.amazon.tv.launcher";
+        String setting = "com.amazon.tv.settings.v2";
+
+        if (lastApp.contains(launcher) || lastApp.contains(setting)) {
+            Log.i("Wolf", "Launcher and Settings detected");
+        } else {
+            pName = lastApp;
+            cName = lastApp;
+        }
 
         if (!settings.ApplicationOpenDetection)
             return;
@@ -30,6 +38,7 @@ public class AccServ extends AccessibilityService {
         CharSequence packageName = event.getPackageName();
         if (packageName.equals("com.amazon.firelauncher"))
             HomePress.Perform(getApplicationContext());
+
     }
 
     @Override

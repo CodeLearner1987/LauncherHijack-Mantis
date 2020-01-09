@@ -1,9 +1,8 @@
 package com.baronkiko.launcherhijack;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,7 +12,7 @@ import android.widget.CheckBox;
 
 public class SettingsActivity extends AppCompatActivity
 {
-    private CheckBox hwButtonDetection, launncherOpen, broadcastReciever, overlayDetection, disableWhileMenuHeld, disableInTaskSwitcher;
+    private CheckBox hwButtonDetection, launncherOpen, broadcastReciever, overlayDetection, disableWhileMenuHeld, disableInTaskSwitcher, sleepCheckCB;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -37,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity
                 overlayDetection.setChecked(settings.OverlayApplicationDetection);
                 disableWhileMenuHeld.setChecked(settings.MenuButtonOverride);
                 disableInTaskSwitcher.setChecked(settings.RecentAppOverride);
+                sleepCheckCB.setChecked(settings.SleepDetection);
 
                 settings.SaveSettings();
 
@@ -118,6 +118,12 @@ public class SettingsActivity extends AppCompatActivity
         disableInTaskSwitcher.setChecked(settings.RecentAppOverride);
         AddListeners(cbv, disableInTaskSwitcher);
 
+        // Enable Sleep Check
+        cbv = findViewById(R.id.sleepCheckCBView);
+        sleepCheckCB = (CheckBox) findViewById(R.id.sleepCheckCB);
+        sleepCheckCB.setChecked(settings.SleepDetection);
+        AddListeners(cbv, sleepCheckCB);
+
 
 
         // Save Button
@@ -134,7 +140,7 @@ public class SettingsActivity extends AppCompatActivity
                 settings.OverlayApplicationDetection = overlayDetection.isChecked();
                 settings.MenuButtonOverride = disableWhileMenuHeld.isChecked();
                 settings.RecentAppOverride = disableInTaskSwitcher.isChecked();
-
+                settings.SleepDetection = sleepCheckCB.isChecked();
                 settings.SaveSettings();
                 onBackPressed();
             }

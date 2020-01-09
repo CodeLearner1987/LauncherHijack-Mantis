@@ -8,8 +8,6 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.widget.Toast;
 
-import com.jaredrummler.android.device.DeviceName;
-
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.UI_MODE_SERVICE;
 
@@ -20,7 +18,8 @@ public class SettingsMan
     protected static class SettingStore
     {
         public static final String TAG = "DeviceTypeRuntimeCheck";
-        static boolean HardwareDetection, ApplicationOpenDetection, BroadcastRecieverDetection, OverlayApplicationDetection, MenuButtonOverride, RecentAppOverride, RunningOnTV;
+        static boolean HardwareDetection, ApplicationOpenDetection, BroadcastRecieverDetection, OverlayApplicationDetection,
+                MenuButtonOverride, RecentAppOverride, RunningOnTV, SleepDetection;
 
         private static Context c;
         private static SharedPreferences settings;
@@ -46,6 +45,7 @@ public class SettingsMan
             OverlayApplicationDetection = settings.getBoolean("OverlayApplicationDetection", false);
             MenuButtonOverride = settings.getBoolean("MenuButtonOverride", false);
             RecentAppOverride = settings.getBoolean("RecentAppOverride", false);
+            SleepDetection = settings.getBoolean("SleepDetection", false);
         }
 
         public static void LoadDefaults()
@@ -58,6 +58,7 @@ public class SettingsMan
             OverlayApplicationDetection = !android7; // Disabled for new fire tablets and tv
             RecentAppOverride = android7 & !tv; // Enable for new fire tablets
             BroadcastRecieverDetection = true;
+            SleepDetection = false;
             ApplicationOpenDetection = !tv; // Fall back enabled by default for non tv users
 
             SharedPreferences.Editor editor = settings.edit();
@@ -75,6 +76,7 @@ public class SettingsMan
             editor.putBoolean("OverlayApplicationDetection", OverlayApplicationDetection);
             editor.putBoolean("MenuButtonOverride", MenuButtonOverride);
             editor.putBoolean("RecentAppOverride", RecentAppOverride);
+            editor.putBoolean("SleepDetection", SleepDetection);
             editor.commit(); // Commit the edits!
 
             Toast.makeText(MainActivity.GetContext(),"Settings Saved", Toast.LENGTH_LONG).show();

@@ -1,5 +1,6 @@
 package com.baronkiko.launcherhijack;
 
+import android.Manifest;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -8,14 +9,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,6 +36,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
 {
     private static Context context;
+
+    String AMAZON_MODEL = Build.MODEL;
 
     private ListView mListAppInfo;
     private MenuItem launcher, sysApps;
@@ -229,46 +233,100 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
 
+        final boolean hasSecurePerm = ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
+
         if (!isAccessibilityEnabled(context, "com.baronkiko.launcherhijack/.AccServ"))
         {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                    .setTitle("Accessibility Service Disabled")
-                    .setMessage("Accessible Service is disabled. You must enable it to ensure Launcher Hijack's functionality")
-                    .setCancelable(true)
-                    .setNegativeButton("Close", new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        {
+            //checking if our device is Firestick 4K
+            if ((AMAZON_MODEL.matches("AFTMM"))) {
 
-                        }
-                    })
-                    .setPositiveButton("Help", new DialogInterface.OnClickListener()
+                String welcomeMessage = "Accessible Service is disabled for your Firestick 4K.";
+                String welcomeMessage2 = "In order to use this tool on your device, you must first run the below commands from your PC:";
+                String adbCommand1 = "# adb tcpip 5555";
+                String adbCommand2 = "# adb connect (yourfiretvip)";
+                String adbCommand3 = "# adb shell";
+                String adbCommand4 = "# pm grant com.baronkiko.launcherhijack android.permission.WRITE_SECURE_SETTINGS";
+                String cmddone = "Press Done only after giving the permissions";
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setTitle("Accessibility Service Disabled")
+                        .setMessage(welcomeMessage + "\n" + welcomeMessage2 + "\n" + adbCommand1 +
+                                "\n" + adbCommand2 + "\n" + adbCommand3 + "\n" + adbCommand4 + "\n" + cmddone)
+                        .setCancelable(true)
+                        .setNegativeButton("Close", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+
+                            }
+                        })
+                        .setPositiveButton("Done", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                //checking for Secure Permissions
+                                if (hasSecurePerm) {
+                                    try {
+                                        Settings.Secure.putString(getContentResolver(), "enabled_accessibility_services", "com.baronkiko.launcherhijack/com.baronkiko.launcherhijack.AccServ");
+                                        Settings.Secure.putString(getContentResolver(), "accessibility_enabled", "1");
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                } else if (!hasSecurePerm) {
+
+                                    Toast.makeText(getApplicationContext(), "SECURE Permission not Granted", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            }
+
+            else {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setTitle("Accessibility Service Disabled")
+                        .setMessage("Accessible Service is disabled. You must enable it to ensure Launcher Hijack's functionality")
+                        .setCancelable(true)
+                        .setNegativeButton("Close", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+
+                            }
+                        })
+                        .setPositiveButton("Help", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                OpenHelp();
+                            }
+                        });
+                if (!SettingsMan.GetSettings().RunningOnTV)
+                {
+                    builder.setNeutralButton("Open Settings", new DialogInterface.OnClickListener()
                     {
                         @Override
-                        public void onClick(DialogInterface dialog, int which)
+                        public void onClick(DialogInterface dialog, int id)
                         {
-                            OpenHelp();
+                            Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                            startActivity(intent);
                         }
                     });
-            if (!SettingsMan.GetSettings().RunningOnTV)
-            {
-                builder.setNeutralButton("Open Settings", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-                        startActivity(intent);
-                    }
-                });
+                }
+                AlertDialog alert = builder.create();
+                alert.show();
             }
-            AlertDialog alert = builder.create();
-            alert.show();
         }
         else if (getApplicationContext().getSharedPreferences("LauncherHijack", MODE_PRIVATE).getString("ChosenLauncher", "com.baronkiko.launcherhijack").equals("com.baronkiko.launcherhijack"))
             Toast.makeText(getApplicationContext(),"Please select a launcher", Toast.LENGTH_LONG).show();
-
 
         setContentView(com.baronkiko.launcherhijack.R.layout.activity_main);
 
@@ -312,6 +370,11 @@ public class MainActivity extends AppCompatActivity
                 alertDialog.show();
             }
         });
+
+        //Starting service to listen Screen State
+        Intent i = new Intent(this,ScreenOnOffService.class);
+        i.setAction("com.baronkiko.launcherhijack.ScreenOnOffService");
+        startService(i);
     }
 
     @Override
