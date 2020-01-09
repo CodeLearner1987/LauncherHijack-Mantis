@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity
             //checking if our device is Firestick 4K
             if ((AMAZON_MODEL.matches("AFTMM"))) {
 
-                String welcomeMessage = "Accessible Service is disabled for your Firestick 4K.";
+                String welcomeMessage = "Accessibility Service is disabled for your Firestick 4K.";
                 String welcomeMessage2 = "In order to use this tool on your device, you must first run the below commands from your PC:";
                 String adbCommand1 = "# adb tcpip 5555";
                 String adbCommand2 = "# adb connect (yourfiretvip)";

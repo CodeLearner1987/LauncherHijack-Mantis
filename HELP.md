@@ -1,3 +1,22 @@
+# Fire TV Stick 4K
+**Installation**
+1. Natigate to this GitHub's downloads page (https://github.com/sweenwolf/LauncherHijack/releases/tag/4K.0.3) on your desktop/laptop and download the latest APK
+2. Install ADB on your desktop/laptop (Google will help you) and ensure a connection to your Fire TV.
+3. Install Launcher Hijack with this command
+
+`adb install -g <path to downloaded APK>`
+eg: `adb install -g C:\Downloads\LH4K.0.3.apk`
+
+ if you installed Launcher Hijack without using "-g" then you'll have to enable the accessibility service using these commands:
+`adb shell settings put secure enabled_accessibility_services com.baronkiko.launcherhijack/com.baronkiko.launcherhijack.AccServ`
+`adb shell settings put secure accessibility_enabled 1`
+
+4. Find and open Launcher Hijack
+5. Press Done to Save the Settings
+6. Select your desired Launcher from the list provided
+7. Reboot your device (Recommended)
+8. Congratulation, if all is working correctly your home button should now open your chosen launcher.
+
 # Fire Tablets
 **Installation**  
 1. Natigate to this GitHub's downloads page (https://github.com/BaronKiko/LauncherHijack/releases) on your tablet and download the latest APK
