@@ -6,4 +6,7 @@
     <color name="blue">#ff00b5f7</color>
     <color name="blue_50">#4d7ac6ff</color>
     <color name="color_select_view">#27000000</color>
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+
 </resources>

@@ -8,8 +8,8 @@ import android.os.IBinder;
 import android.util.Log;
 
 public class ScreenOnOffService extends Service {
-    private static SettingsMan.SettingStore settings;
     BroadcastReceiver mReceiver = null;
+    private static SettingsMan.SettingStore settings;
 
     @Override
     public void onCreate() {
@@ -34,6 +34,7 @@ public class ScreenOnOffService extends Service {
             }
 
             if (screenOff) {
+                Log.i("Wolf", "Screen trg");
                 HomePress.Perform(getApplicationContext());
                 String pName = AccServ.pName;
                 String cName = AccServ.cName;
@@ -42,9 +43,7 @@ public class ScreenOnOffService extends Service {
                 if (i != null) {
                     startActivity(i);
                 }
-
             }
-
         }
     }
 

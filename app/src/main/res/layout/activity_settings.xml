@@ -1,220 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".SettingsActivity">
+    android:background="@color/colorPrimary">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/settings_element_height"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="14dip"
-        android:paddingRight="14dip"
-        android:paddingTop="8dip"
-        android:paddingBottom="8dip"
-        android:id="@+id/hardwareCBView">
+        tools:context=".SettingsActivity">
+
+        <RelativeLayout
+            android:id="@+id/hardwareCBView"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_element_height"
+            android:orientation="vertical"
+            android:paddingLeft="14dip"
+            android:paddingTop="8dip"
+            android:paddingRight="14dip"
+            android:paddingBottom="8dip">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:textSize="@dimen/settings_font_size"
                 android:gravity="center_vertical"
-                android:text="@string/hardware_button_detection" />
+                android:text="@string/hardware_button_detection"
+                android:textColor="@color/white"
+                android:textSize="@dimen/settings_font_size" />
+
             <CheckBox
                 android:id="@+id/hardwareCB"
-                android:background="@drawable/search_focus"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
                 android:layout_gravity="center_vertical"
-                android:layout_alignParentRight="true" />
-    </RelativeLayout>
+                android:background="@drawable/search_focus"
+                android:buttonTint="@color/white" />
+        </RelativeLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/settings_element_height"
-        android:orientation="vertical"
-        android:paddingLeft="14dip"
-        android:paddingRight="14dip"
-        android:paddingTop="8dip"
-        android:paddingBottom="8dip"
-        android:id="@+id/openApplicationCBView">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:textSize="@dimen/settings_font_size"
-            android:gravity="center_vertical"
-            android:text="@string/launcher_open_detection" />
-        <CheckBox
-            android:id="@+id/openApplicationCB"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/search_focus"
-            android:layout_gravity="center_vertical"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/openApplicationCBView"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_element_height"
+            android:orientation="vertical"
+            android:paddingLeft="14dip"
+            android:paddingTop="8dip"
+            android:paddingRight="14dip"
+            android:paddingBottom="8dip">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/settings_element_height"
-        android:orientation="vertical"
-        android:paddingLeft="14dip"
-        android:paddingRight="14dip"
-        android:paddingTop="8dip"
-        android:paddingBottom="8dip"
-        android:id="@+id/broadcastCBView">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:textSize="@dimen/settings_font_size"
-            android:gravity="center_vertical"
-            android:text="@string/broadcast_reciever_detection" />
-        <CheckBox
-            android:id="@+id/broadcastCB"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/search_focus"
-            android:layout_gravity="center_vertical"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:text="@string/launcher_open_detection"
+                android:textColor="@color/white"
+                android:textSize="@dimen/settings_font_size" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/settings_element_height"
-        android:orientation="vertical"
-        android:paddingLeft="14dip"
-        android:paddingRight="14dip"
-        android:paddingTop="8dip"
-        android:paddingBottom="8dip"
-        android:id="@+id/overlayCBView">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:textSize="@dimen/settings_font_size"
-            android:gravity="center_vertical"
-            android:text="@string/overlay_detection_requires_reboot" />
-        <CheckBox
-            android:id="@+id/overlayCB"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/search_focus"
-            android:layout_gravity="center_vertical"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+            <CheckBox
+                android:id="@+id/openApplicationCB"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/search_focus"
+                android:buttonTint="@color/white" />
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/settings_element_height"
-        android:orientation="vertical"
-        android:paddingLeft="14dip"
-        android:paddingRight="14dip"
-        android:paddingTop="8dip"
-        android:paddingBottom="8dip"
-        android:id="@+id/menuButtonOverrideCBView">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:textSize="@dimen/settings_font_size"
-            android:gravity="center_vertical"
-            android:text="@string/disable_while_menu_is_held_hardware_buttons_only" />
+        <RelativeLayout
+            android:id="@+id/broadcastCBView"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_element_height"
+            android:orientation="vertical"
+            android:paddingLeft="14dip"
+            android:paddingTop="8dip"
+            android:paddingRight="14dip"
+            android:paddingBottom="8dip">
 
-        <CheckBox
-            android:id="@+id/menuButtonOverrideCB"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/search_focus" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:text="@string/broadcast_reciever_detection"
+                android:textColor="@color/white"
+                android:textSize="@dimen/settings_font_size" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/settings_element_height"
-        android:orientation="vertical"
-        android:paddingLeft="14dip"
-        android:paddingRight="14dip"
-        android:paddingTop="8dip"
-        android:paddingBottom="8dip"
-        android:id="@+id/taskSwitchCBView">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:textSize="@dimen/settings_font_size"
-            android:gravity="center_vertical"
-            android:text="@string/disable_in_task_switcher" />
-        <CheckBox
-            android:id="@+id/taskSwitchCB"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/search_focus"
-            android:layout_gravity="center_vertical"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
+            <CheckBox
+                android:id="@+id/broadcastCB"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/search_focus"
+                android:buttonTint="@color/white" />
+        </RelativeLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/sleepCheckCBView"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/settings_element_height"
-        android:orientation="vertical"
-        android:paddingLeft="14dip"
-        android:paddingTop="8dip"
-        android:paddingRight="14dip"
-        android:paddingBottom="8dip">
+        <RelativeLayout
+            android:id="@+id/overlayCBView"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_element_height"
+            android:orientation="vertical"
+            android:paddingLeft="14dip"
+            android:paddingTop="8dip"
+            android:paddingRight="14dip"
+            android:paddingBottom="8dip">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:gravity="center_vertical"
-            android:text="@string/enable_sleep_check"
-            android:textSize="@dimen/settings_font_size" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:text="@string/overlay_detection_requires_reboot"
+                android:textColor="@color/white"
+                android:textSize="@dimen/settings_font_size" />
 
-        <CheckBox
-            android:id="@+id/sleepCheckCB"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/search_focus"
-            android:layout_gravity="center_vertical" />
-    </RelativeLayout>
+            <CheckBox
+                android:id="@+id/overlayCB"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/search_focus"
+                android:buttonTint="@color/white" />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/menuButtonOverrideCBView"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_element_height"
+            android:orientation="vertical"
+            android:paddingLeft="14dip"
+            android:paddingTop="8dip"
+            android:paddingRight="14dip"
+            android:paddingBottom="8dip">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dip"
-        android:weightSum="2">
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="16dip"
-            android:background="@drawable/search_focus"
-            android:layout_marginBottom="16dip"
-            android:layout_marginLeft="14dip"
-            android:layout_marginRight="14dip"
-            android:text="@string/cancel"/>
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/search_focus"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="16dip"
-            android:layout_marginBottom="16dip"
-            android:layout_marginLeft="14dip"
-            android:layout_marginRight="14dip"
-            android:text="@string/save"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:text="@string/disable_while_menu_is_held_hardware_buttons_only"
+                android:textColor="@color/white"
+                android:textSize="@dimen/settings_font_size" />
+
+            <CheckBox
+                android:id="@+id/menuButtonOverrideCB"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/search_focus"
+                android:buttonTint="@color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/taskSwitchCBView"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_element_height"
+            android:orientation="vertical"
+            android:paddingLeft="14dip"
+            android:paddingTop="8dip"
+            android:paddingRight="14dip"
+            android:paddingBottom="8dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:text="@string/disable_in_task_switcher"
+                android:textColor="@color/white"
+                android:textSize="@dimen/settings_font_size" />
+
+            <CheckBox
+                android:id="@+id/taskSwitchCB"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/search_focus"
+                android:buttonTint="@color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sleepCheckCBView"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_element_height"
+            android:orientation="vertical"
+            android:paddingLeft="14dip"
+            android:paddingTop="8dip"
+            android:paddingRight="14dip"
+            android:paddingBottom="8dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:paddingRight="18dp"
+                android:text="@string/enable_sleep_check"
+                android:textColor="@color/white"
+                android:textSize="@dimen/settings_font_size" />
+
+            <CheckBox
+                android:id="@+id/sleepCheckCB"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/search_focus"
+                android:buttonTint="@color/white" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dip"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="14dip"
+                android:layout_marginTop="16dip"
+                android:layout_marginRight="14dip"
+                android:layout_marginBottom="16dip"
+                android:layout_weight="1"
+                android:background="@drawable/search_focus"
+                android:text="@string/cancel"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="14dip"
+                android:layout_marginTop="16dip"
+                android:layout_marginRight="14dip"
+                android:layout_marginBottom="16dip"
+                android:layout_weight="1"
+                android:background="@drawable/search_focus"
+                android:text="@string/save"
+                android:textColor="@color/white" />
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

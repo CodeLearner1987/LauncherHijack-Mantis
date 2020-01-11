@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
@@ -87,17 +86,15 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.help:
-                OpenHelp();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sweenwolf/LauncherHijack/blob/master/HELP.md")));
                 break;
 
-            case R.id.donate:
-                Intent donateIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/BaronKiko/LauncherHijack/blob/master/README.md#donations"));
-                startActivity(donateIntent);
+            case R.id.about:
+                startActivity(new Intent(getApplicationContext(), About.class));
                 break;
 
             case  R.id.settings:
-                Intent myIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(myIntent);
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 break;
 
             default:
@@ -105,12 +102,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         return true;
-    }
-
-    private void OpenHelp()
-    {
-        Intent helpIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/BaronKiko/LauncherHijack/blob/master/HELP.md"));
-        startActivity(helpIntent);
     }
 
     private void UpdateList()
@@ -227,108 +218,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         SetContext(getApplicationContext());
 
         super.onCreate(savedInstanceState);
 
-        final boolean hasSecurePerm = ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
-
-        if (!isAccessibilityEnabled(context, "com.baronkiko.launcherhijack/.AccServ"))
-        {
-            //checking if our device is Firestick 4K
-            if ((AMAZON_MODEL.matches("AFTMM"))) {
-
-                String welcomeMessage = "Accessibility Service is disabled for your Firestick 4K.";
-                String welcomeMessage2 = "In order to use this tool on your device, you must first run the below commands from your PC:";
-                String adbCommand1 = "# adb tcpip 5555";
-                String adbCommand2 = "# adb connect (yourfiretvip)";
-                String adbCommand3 = "# adb shell";
-                String adbCommand4 = "# pm grant com.baronkiko.launcherhijack android.permission.WRITE_SECURE_SETTINGS";
-                String cmddone = "Press Done only after giving the permissions";
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                        .setTitle("Accessibility Service Disabled")
-                        .setMessage(welcomeMessage + "\n" + welcomeMessage2 + "\n" + adbCommand1 +
-                                "\n" + adbCommand2 + "\n" + adbCommand3 + "\n" + adbCommand4 + "\n" + cmddone)
-                        .setCancelable(true)
-                        .setNegativeButton("Close", new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which)
-                            {
-
-                            }
-                        })
-                        .setPositiveButton("Done", new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                //checking for Secure Permissions
-                                if (hasSecurePerm) {
-                                    try {
-                                        Settings.Secure.putString(getContentResolver(), "enabled_accessibility_services", "com.baronkiko.launcherhijack/com.baronkiko.launcherhijack.AccServ");
-                                        Settings.Secure.putString(getContentResolver(), "accessibility_enabled", "1");
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                } else if (!hasSecurePerm) {
-
-                                    Toast.makeText(getApplicationContext(), "SECURE Permission not Granted", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-                AlertDialog alert = builder.create();
-                alert.show();
-
-            }
-
-            else {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                        .setTitle("Accessibility Service Disabled")
-                        .setMessage("Accessible Service is disabled. You must enable it to ensure Launcher Hijack's functionality")
-                        .setCancelable(true)
-                        .setNegativeButton("Close", new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which)
-                            {
-
-                            }
-                        })
-                        .setPositiveButton("Help", new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which)
-                            {
-                                OpenHelp();
-                            }
-                        });
-                if (!SettingsMan.GetSettings().RunningOnTV)
-                {
-                    builder.setNeutralButton("Open Settings", new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id)
-                        {
-                            Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-                            startActivity(intent);
-                        }
-                    });
-                }
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        }
-        else if (getApplicationContext().getSharedPreferences("LauncherHijack", MODE_PRIVATE).getString("ChosenLauncher", "com.baronkiko.launcherhijack").equals("com.baronkiko.launcherhijack"))
-            Toast.makeText(getApplicationContext(),"Please select a launcher", Toast.LENGTH_LONG).show();
-
-        setContentView(com.baronkiko.launcherhijack.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
+        isAccessEnabled();
 
         mListAppInfo = findViewById(R.id.lvApps);
 
@@ -375,6 +271,99 @@ public class MainActivity extends AppCompatActivity
         Intent i = new Intent(this,ScreenOnOffService.class);
         i.setAction("com.baronkiko.launcherhijack.ScreenOnOffService");
         startService(i);
+    }
+
+    private void isAccessEnabled() {
+        if (!isAccessibilityEnabled(context, "com.baronkiko.launcherhijack/.AccServ")) {
+            //checking if our device is Firestick 4K
+            if ((AMAZON_MODEL.matches("AFTMM"))) {
+
+                String welcomeMessage = "Accessibility Service is disabled for your Firestick 4K.";
+                String welcomeMessage2 = "In order to use this tool on your device, you must first run the below commands from your PC:";
+                String adbCommand1 = "# adb tcpip 5555";
+                String adbCommand2 = "# adb connect (yourfiretvip)";
+                String adbCommand3 = "# adb shell";
+                String adbCommand4 = "# pm grant com.baronkiko.launcherhijack android.permission.WRITE_SECURE_SETTINGS";
+                String cmddone = "Press Done only after giving the permissions";
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setTitle("Accessibility Service Disabled")
+                        .setMessage(welcomeMessage + "\n" + welcomeMessage2 + "\n" + adbCommand1 +
+                                "\n" + adbCommand2 + "\n" + adbCommand3 + "\n" + adbCommand4 + "\n" + cmddone)
+                        .setCancelable(true)
+                        .setNeutralButton("Help", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sweenwolf/LauncherHijack/blob/master/HELP.md")));
+                                isAccessEnabled();
+                            }
+                        })
+                        .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(MainActivity.this, "Launcher Hijack will not work", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        })
+                        .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                setSecurePerm();
+                            }
+                        });
+
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            } else {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setTitle("Accessibility Service Disabled")
+                        .setMessage("Accessibility Service is disabled. You must enable it to ensure Launcher Hijack's functionality")
+                        .setCancelable(true)
+                        .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                if (!SettingsMan.GetSettings().RunningOnTV) {
+                    builder.setNeutralButton("Open Settings", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                            startActivity(intent);
+                        }
+                    });
+                }
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        } else if (getApplicationContext().getSharedPreferences("LauncherHijack", MODE_PRIVATE).getString("ChosenLauncher", "com.baronkiko.launcherhijack").equals("com.baronkiko.launcherhijack"))
+            Toast.makeText(getApplicationContext(), "Please select a launcher", Toast.LENGTH_LONG).show();
+
+    }
+
+    private void setSecurePerm() {
+        //checking for Secure Permissions
+        int SecurePerm = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_SECURE_SETTINGS);
+        if (SecurePerm == 0) {
+            try {
+                Settings.Secure.putString(getContentResolver(), "enabled_accessibility_services", "com.baronkiko.launcherhijack/com.baronkiko.launcherhijack.AccServ");
+                Settings.Secure.putString(getContentResolver(), "accessibility_enabled", "1");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "SECURE Permission not Granted", Toast.LENGTH_SHORT).show();
+            isAccessEnabled();
+        }
     }
 
     @Override

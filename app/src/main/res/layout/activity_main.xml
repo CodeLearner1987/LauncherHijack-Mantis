@@ -9,6 +9,6 @@
         android:id="@+id/lvApps"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:choiceMode="singleChoice"
-        />
+        android:choiceMode="singleChoice" />
+
 </RelativeLayout>

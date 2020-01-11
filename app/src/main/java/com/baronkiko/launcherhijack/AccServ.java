@@ -30,13 +30,14 @@ public class AccServ extends AccessibilityService {
         } else {
             pName = lastApp;
             cName = lastApp;
+            Log.i("Wolf", pName + cName);
         }
 
         if (!settings.ApplicationOpenDetection)
             return;
 
         CharSequence packageName = event.getPackageName();
-        if (packageName.equals("com.amazon.firelauncher"))
+        if (packageName.equals("com.amazon.firelauncher") || packageName.equals(launcher))
             HomePress.Perform(getApplicationContext());
 
     }
