@@ -1,6 +1,8 @@
 # Fire TV Stick 4K
 **Installation**
-1. Navigate to this GitHub's downloads page (https://github.com/sweenwolf/LauncherHijack/releases/tag/4K.0.3) on your desktop/laptop and download the latest APK
+1. Navigate to this GitHub's downloads page (https://github.com/sweenwolf/LauncherHijack/releases/tag/4K.0.3) or
+(https://forum.xda-developers.com/showpost.php?p=82328281&postcount=225)
+on your desktop/laptop and download the latest APK
 2. Install ADB on your desktop/laptop (Google will help you) and ensure a connection to your Fire TV.
 3. Connect to your Firestick 4K by this command:
 `adb connect youripaddress:port`
